@@ -1,10 +1,10 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import Layout from '@/components/layout/Layout';
-import ButtonLink from '@/components/links/ButtonLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
-import Seo from '@/components/Seo';
-
+import SideBar from '@/components/sideBar';
+import MyTable from '@/components/table';
 /**
  * SVGR Support
  * Caveat: No React Props Type.
@@ -12,27 +12,28 @@ import Seo from '@/components/Seo';
  * You can override the next-env if the type is important to you
  * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
  */
-import Vercel from '~/svg/Vercel.svg';
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
 export default function HomePage() {
+  const router = useRouter();
+  console.log(typeof router.query['tableName']);
+  let tableName;
+  if (typeof router.query['tableName'] === 'string') {
+    tableName = router.query['tableName'];
+  }
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
-      <Seo />
+      {/* <Seo /> */}
 
       <main>
-        <section className='bg-white'>
-          <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-            <Vercel className='text-5xl' />
-            <h1 className='mt-4'>Next.js + Tailwind CSS + Ag_Grid</h1>
-            <ButtonLink className='mt-6' href='/tables' variant='light'>
-              See all tables
-            </ButtonLink>
-
+        <section className='bg-blue-300'>
+          <div className=' relative flex  justify-start text-center'>
+            <SideBar />
+            <MyTable tableName={tableName} />
             <footer className='absolute bottom-2 text-gray-700'>
               © {new Date().getFullYear()} By{' '}
               <UnderlineLink href='#'>Minato-Legend</UnderlineLink>
